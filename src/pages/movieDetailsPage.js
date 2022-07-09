@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState, useEffect}  from "react";
+import { useParams } from "react-router-dom";
 import MovieHeader from "../components/headerMovie/";
 import MovieDetails from "../components/movieDetails/";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
+import { getMovie, getMovieImages } from "../api/tmdb-api";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,9 +22,23 @@ const useStyles = makeStyles((theme) => ({
 
 const MoviePage = (props) => {
   const classes = useStyles();
-  const movie = props.movie;
-  const images = props.images;
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+  const [images, setImages] = useState([]);
 
+  useEffect(() => {
+    getMovie(id).then((movie) => {
+      setMovie(movie);
+    });
+  }, [id]);
+
+  useEffect(() => {
+    getMovieImages(id).then((images) => {
+      setImages(images);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
   return (
     <>
       {movie ? (
@@ -43,8 +59,8 @@ const MoviePage = (props) => {
                       cols={1}
                     >
                       <img
-                        src={`https://image.tmdb.org/t/p/w500/${image}`}
-                        alt={image.poster_path}
+                        src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                        alt={image.file_path}
                       />
                     </ImageListItem>
                   ))}
