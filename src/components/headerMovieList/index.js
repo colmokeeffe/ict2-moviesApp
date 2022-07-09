@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { useNavigate } from "react-router-dom";
 
-const navigate = useNavigate();
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props ) => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const title = props.title
   return (

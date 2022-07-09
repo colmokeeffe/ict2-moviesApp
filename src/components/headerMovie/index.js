@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import HomeIcon from "@material-ui/icons/Home";
 import { useNavigate } from "react-router-dom";
 
-const navigate = useNavigate();
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MovieHeader = (props) => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const movie = props.movie;
 
   return (
