@@ -14,6 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
+import { MoviesContext } from "../../contexts/moviesContext";
 
 const useStyles = makeStyles({
   card: { maxWidth: 345 },
@@ -23,13 +24,19 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MovieCard(props) {
+export default function MovieCard({ movie }) {
   const classes = useStyles();
-  const movie = props.movie;
+  const { favourites, addToFavourites } = useContext(MoviesContext);
+
+  if (favourites.find((id) => id === movie.id)) {
+    movie.favourite = true;
+  } else {
+    movie.favourite = false
+  }
 
   const handleAddToFavourite = (e) => {
     e.preventDefault();
-    props.selectFavourite(movie.id);
+    addToFavourites(movie);
   };
 
   return (
