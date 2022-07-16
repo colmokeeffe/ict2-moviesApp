@@ -5,6 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
+import { useQuery } from "react-query";
+import Spinner from '../spinner'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,14 +27,20 @@ const useStyles = makeStyles((theme) => ({
 
 const TemplateMoviePage = ({ movie, children }) => {
   const classes = useStyles();
-  const [images, setImages] = useState([]);
+  const { data , error, isLoading, isError } = useQuery(
+    ["images", { id: movie.id }],
+    getMovieImages
+  );
 
-  useEffect(() => {
-    getMovieImages(movie.id).then((images) => {
-      setImages(images);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+  const images = data.posters 
+
 
   return (
     <>
