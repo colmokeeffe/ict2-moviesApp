@@ -3,10 +3,10 @@ import PageTemplate from '../components/templateMovieListPage';
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { useQuery } from 'react-query'; 
 import Spinner from '../components/spinner';
+import AddPlayListIcon from "../components/cardIcons/addPlaylist";
 
-import PlaylistAddIcon from  "@material-ui/icons/PlaylistAdd"
 
-const addToFavourites = () => null;
+
 const UpcomingMoviesPage = (props) => {
   const [movies, setMovies] = useState([]);
   const favourites = movies.filter(m => m.favourite)
@@ -29,10 +29,10 @@ const UpcomingMoviesPage = (props) => {
       title='Up and Coming Movies'
       movies={movies} 
       action={(movie) => {
-        return <PlaylistAddIcon movie={movie} />
+        return <AddPlayListIcon movie={movie} />
       }}
       
-      selectFavourite={addToFavourites}
+      
       />
       
   );
